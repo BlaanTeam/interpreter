@@ -57,6 +57,8 @@ static int dfs(AST *node, int &id)
 
 void dump_dot(AST *tree)
 {
+    if (!tree)
+        return;
     cout << "digraph {\n";
     int id = 0;
     dfs(tree, id);
