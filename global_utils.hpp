@@ -11,6 +11,8 @@ using namespace std;
 string get_number(const string &line, int &idx);
 string get_identifier(const string &line, int &idx);
 
+void init_token_names(map<int, string> &);
+
 void dump_dot(AST *);
 
 #endif

@@ -84,3 +84,17 @@ string get_identifier(const string &line, int &idx)
     }
     return line.substr(idx - len, len);
 }
+
+void init_token_names(map<int, string> &token_names)
+{
+    token_names[ADD] = "+";
+    token_names[SUB] = "-";
+    token_names[MUL] = "*";
+    token_names[DIV] = "/";
+    token_names[MOD] = "%";
+    token_names[OP] = "(";
+    token_names[CP] = ")";
+    token_names[EQ] = "=";
+    token_names[CALL] = "CALL";
+    token_names[NONE] = "#";
+}

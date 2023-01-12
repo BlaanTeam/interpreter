@@ -6,16 +6,7 @@ map<Identifier, double> vars;
 int main()
 {
 
-    token_names[ADD] = "+";
-    token_names[SUB] = "-";
-    token_names[MUL] = "*";
-    token_names[DIV] = "/";
-    token_names[MOD] = "%";
-    token_names[OP] = "(";
-    token_names[CP] = ")";
-    token_names[EQ] = "=";
-    token_names[CALL] = "CALL";
-    token_names[NONE] = "#";
+    init_token_names(token_names);
     while (true)
     {
         try
@@ -34,6 +25,7 @@ int main()
             for (auto var : vars)
                 cout << var.first.name << " = " << var.second << endl;
             delete tree;
+            free(line);
         }
         catch (exception &e)
         {
