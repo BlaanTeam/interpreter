@@ -2,6 +2,7 @@
 #define __GLOBAL_UTILS_H__
 
 #include <string>
+
 #include "ast.hpp"
 
 using namespace std;
