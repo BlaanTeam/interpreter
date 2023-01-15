@@ -43,6 +43,8 @@ class Parser {
   AST *expression(void);
   AST *assignment(void);
   AST *multiple_assignment(void);
+  AST *arguments(void);
+  AST *call_expression(void);
   AST *init(void);
 };
 

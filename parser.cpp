@@ -135,10 +135,37 @@ AST *Parser::multiple_assignment() {
   return ret;
 }
 
+AST *Parser::call_expression() {
+  if (is_empty()) return nullptr;
+
+  const string &func_name = peek_value();
+
+  if (!accept(IDENT)) return nullptr;
+
+  CallExpression *ret = new CallExpression(func_name);
+  if (!accept(OP)) return nullptr;
+
+  string arg_name = peek_value();
+  if (accept(IDENT)) {
+    ret->add(new Identifier(arg_name));
+    while (accept(COMMA)) {
+      arg_name = peek_value();
+      if (!accept(IDENT)) return nullptr;
+      ret->add(new Identifier(arg_name));
+    }
+  }
+  if (!accept(CP)) return nullptr;
+  return ret;
+}
+
 AST *Parser::init(void) {
   if (is_empty()) return nullptr;
-  AST *ret = multiple_assignment();
+  AST *ret = nullptr;
 
+  if (match(LET))
+    ret = multiple_assignment();
+  else if (match(IDENT))
+    ret = call_expression();
   if (!ret || !accept(END)) {
     cerr << "Syntax Error !" << endl;
     return nullptr;

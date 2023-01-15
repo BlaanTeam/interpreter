@@ -8,9 +8,9 @@ This interpreter is designed to evaluate mathematical expressions and return the
 ```
     program = block
 
-    block = "const" ident "=" expression {"," ident "=" number}
+    block = "let" ident "=" expression {"," ident "=" number}
             | ident "lambda" args ":" expression
-            | ident "(" args ")"
+            | ident "(" {args} ")"
     
     args = ident {"," ident}
 

@@ -96,3 +96,40 @@ Unary::Unary(AST *expr_) : expr(expr_) {}
 
 UnarySign::UnarySign(int sign_, AST *expr) : Unary(expr), sign(sign_) {}
 Type UnarySign::eval() { return Type(LITERAL_TYPE, sign) * expr->eval(); }
+
+CallExpression::CallExpression(const string &_name) : name(_name) {}
+
+void CallExpression::add(AST *arg) { args.push_back(arg); }
+
+// buitin functions
+void __print(vector<AST *> args) {
+  for (size_t idx = 0; idx < args.size(); idx++) {
+    cout << args[idx]->eval();
+    if (idx + 1 < args.size()) cout << " ";
+  }
+  cout << endl;
+}
+
+void __clear(void) { vars.clear(); }
+
+void __print_tree(void) {
+  if (!last) {
+    cerr << "No example available!" << endl;
+    return;
+  }
+  dump_dot(last);
+}
+
+Type CallExpression::eval() {
+  // buitin functions
+
+  if (name == "print")
+    __print(args);
+  else if (name == "clear")
+    __clear();
+  else if (name == "tree")
+    __print_tree();
+  else if (vars.find(name) == vars.end())
+    throw NameError(name);
+  return Type(NONE_TYPE);
+}

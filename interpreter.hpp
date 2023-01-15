@@ -34,5 +34,6 @@ enum token_type {
 
 // global variables
 extern map<Identifier, Type> vars;
+extern AST *last;
 
 #endif

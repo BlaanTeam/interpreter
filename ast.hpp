@@ -95,4 +95,13 @@ class UnarySign : public Unary {
   Type eval();
 };
 
+class CallExpression : public AST {
+ public:
+  string        name;
+  vector<AST *> args;
+  CallExpression(const string &);
+  void add(AST *);
+  Type eval();
+};
+
 #endif

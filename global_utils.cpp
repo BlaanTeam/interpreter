@@ -11,6 +11,8 @@ static void label(AST *node, int &id) {
     cout << "[" << ((UnarySign *)node)->sign << "]";
   else if (dynamic_cast<VariableDeclaraction *>(node))
     cout << "VD";
+  else if (dynamic_cast<CallExpression *>(node))
+    cout << "CE";
   else if (dynamic_cast<LiteralType *>(node))
     cout << ((LiteralType *)node)->value;
   else if (dynamic_cast<Identifier *>(node))
@@ -45,6 +47,12 @@ static int dfs(AST *node, int &id) {
       VariableDeclaraction *vd = (VariableDeclaraction *)node;
       for (auto declaration : vd->declarations) {
         l = dfs(declaration, id);
+        edge(my_id, l);
+      }
+    } else if (dynamic_cast<CallExpression *>(node)) {
+      CallExpression *callExpr = (CallExpression *)node;
+      for (auto arg : callExpr->args) {
+        l = dfs(arg, id);
         edge(my_id, l);
       }
     }
