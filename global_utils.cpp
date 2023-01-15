@@ -98,5 +98,6 @@ void init_token_names(map<int, string> &token_names)
     token_names[CP] = ")";
     token_names[EQ] = "=";
     token_names[CALL] = "CALL";
+    token_names[POW]= "^";
     token_names[NONE] = "#";
 }

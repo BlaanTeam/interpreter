@@ -115,7 +115,7 @@ AST *Parser::term(void)
     if (!ret || match(NONE))
         return nullptr;
 
-    while (match(MUL | DIV))
+    while (match(MUL | DIV | POW))
     {
         ret = new BinaryExpression(peek_type(), ret, nullptr);
         next();
