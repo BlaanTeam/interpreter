@@ -27,6 +27,7 @@ Parser::Parser(const string &line) {
       idx++;
     }
   }
+  if (!is_empty()) tokens.push(Token(END, ""));
 }
 
 bool Parser::match(int types) const {
@@ -138,7 +139,7 @@ AST *Parser::init(void) {
   if (is_empty()) return nullptr;
   AST *ret = multiple_assignment();
 
-  if (!ret || !is_empty()) {
+  if (!ret || !accept(END)) {
     cerr << "Syntax Error !" << endl;
     return nullptr;
   }
