@@ -127,7 +127,7 @@ AST *Parser::multiple_assignment() {
     while (accept(COMMA)) {
       ret = assignment();
       if (!ret || match(NONE)) return nullptr;
-      vd->ad∏d(ret);
+      vd->add(ret);
     }
     ret = (AST *)vd;
   }
