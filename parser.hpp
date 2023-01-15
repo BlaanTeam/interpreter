@@ -2,48 +2,48 @@
 #define __PARSER_H__
 
 #include <iostream>
-#include <string>
-#include <queue>
 #include <map>
-#include "interpreter.hpp"
+#include <queue>
+#include <string>
+
 #include "ast.hpp"
 #include "global_utils.hpp"
+#include "interpreter.hpp"
 
 using namespace std;
 
 extern map<int, string> token_names;
 
-class Token
-{
-public:
-    int type;
-    string value;
-    Token(const int &, const string &);
+class Token {
+ public:
+  int    type;
+  string value;
+  Token(const int &, const string &);
 
-    bool operator&(int) const;
+  bool operator&(int) const;
 };
 
-class Parser
-{
-public:
-    queue<Token> tokens;
-    AST *ast;
-    Parser(const string &);
+class Parser {
+ public:
+  queue<Token> tokens;
+  AST         *ast;
+  Parser(const string &);
 
-    bool match(int) const;
-    bool is_empty(void) const;
-    bool accept(int);
+  bool match(int) const;
+  bool is_empty(void) const;
+  bool accept(int);
 
-    int peek_type(void) const;
-    string peek_value(void) const;
+  int    peek_type(void) const;
+  string peek_value(void) const;
 
-    void next(void);
+  void next(void);
 
-    AST *factor(void);
-    AST *term(void);
-    AST *expression(void);
-    AST *assignment(void);
-    AST *init(void);
+  AST *factor(void);
+  AST *term(void);
+  AST *expression(void);
+  AST *assignment(void);
+  AST *multiple_assignment(void);
+  AST *init(void);
 };
 
 #endif

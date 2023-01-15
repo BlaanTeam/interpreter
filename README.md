@@ -6,23 +6,20 @@ This interpreter is designed to evaluate mathematical expressions and return the
 ## Grammar
 
 ```
-    program = block "." ;
+    program = block
 
-    block = [ "const" ident "=" number {"," ident "=" number} ";"]
-            { "procedure" ident ";" block ";" } statement ;
+    block = "const" ident "=" expression {"," ident "=" number}
+            | ident "lambda" args ":" expression
+            | ident "(" args ")"
+    
+    args = ident {"," ident}
 
-    statement = [ ident ":=" expression | "call" ident 
-                | "?" ident | "!" expression 
-                | "begin" statement {";" statement } "end" 
-                | "if" condition "then" statement 
-                | "while" condition "do" statement ];
+    condition = expression
+                | expression ("=="|"!="|"<"|"<="|">"|">=") expression 
 
-    condition = "odd" expression |
-                expression ("=="|"!="|"<"|"<="|">"|">=") expression ;
+    expression = ("+"|"-") term { ("+"|"-") term };
 
-    expression = [ "+"|"-"] term { ("+"|"-") term};
-
-    term = factor {("*"|"/") factor};
+    term = factor {("*"|"/"|"^") factor};
 
     factor = ident | number | "(" expression ")";
 
