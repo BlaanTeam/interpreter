@@ -5,25 +5,25 @@ Type::Type(const short &_type, const double &_value = double()) : type(_type), v
 short Type::operator&(const short _type) const { return type & _type; }
 
 Type Type::operator+(const Type &_type) const {
-  Type type(LITERAL_TYPE);
+  Type type(LITERAL_TYPE, this->value);
 
   type.value += _type.value;
   return type;
 }
 Type Type::operator-(const Type &_type) const {
-  Type type(LITERAL_TYPE);
+  Type type(LITERAL_TYPE, this->value);
 
   type.value -= _type.value;
   return type;
 }
 Type Type::operator*(const Type &_type) const {
-  Type type(LITERAL_TYPE);
+  Type type(LITERAL_TYPE, this->value);
 
   type.value *= _type.value;
   return type;
 }
 Type Type::operator/(const Type &_type) const {
-  Type type(LITERAL_TYPE);
+  Type type(LITERAL_TYPE, this->value);
 
   type.value /= _type.value;
   return type;
