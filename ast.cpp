@@ -1,6 +1,7 @@
 #include "interpreter.hpp"
 
 Type::Type() : type(NONE_TYPE){};
+Type::Type(const Type &copy) : type(copy.type), value(copy.value) {}
 Type::Type(const short &_type, const double &_value = double()) : type(_type), value(_value) {}
 short Type::operator&(const short _type) const { return type & _type; }
 
@@ -133,3 +134,13 @@ Type CallExpression::eval() {
     throw NameError(name);
   return Type(NONE_TYPE);
 }
+
+LambdaDeclaration::LambdaDeclaration(const string &_name) : name(_name), expr(nullptr) {}
+
+Type LambdaDeclaration::eval() {
+  Type type(expr->eval());
+  vars[name] = type;
+  return type;
+}
+
+void LambdaDeclaration::add(const string &param) { params.push_back(param); }

@@ -45,6 +45,7 @@ class Parser {
   AST *multiple_assignment(void);
   AST *arguments(void);
   AST *call_expression(void);
+  AST *lambda_declaration(const string &);
   AST *init(void);
 };
 

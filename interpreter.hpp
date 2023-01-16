@@ -26,14 +26,16 @@ enum token_type {
   EQ = 1 << 10,
   NONE = 1 << 11,
   LET = 1 << 12,
-  COMMA = 1 << 13,
-  END = 1 << 14,
+  LAMBDA = 1 << 13,
+  COMMA = 1 << 14,
+  COLON = 1 << 15,
+  END = 1 << 16,
 };
 
 // abstract syntax tree prototypes
 
 // global variables
 extern map<Identifier, Type> vars;
-extern AST *last;
+extern AST                  *last;
 
 #endif

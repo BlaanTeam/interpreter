@@ -12,7 +12,10 @@ Parser::Parser(const string &line) {
     else if (isalpha(line[idx]) || line[idx] == '_') {
       string name = get_identifier(line, idx);
       Token  token(IDENT, name);
-      if (name == "let") token.type = LET;
+      if (name == "let")
+        token.type = LET;
+      else if (name == "lambda")
+        token.type = LAMBDA;
       tokens.push(token);
     } else {
       bool found = false;
@@ -140,7 +143,10 @@ AST *Parser::call_expression() {
 
   const string &func_name = peek_value();
 
-  if (!accept(IDENT)) return nullptr;
+  if (!accept(IDENT))
+    return nullptr;
+  else if (match(LAMBDA))
+    return lambda_declaration(func_name);
 
   CallExpression *ret = new CallExpression(func_name);
   if (!accept(OP)) return nullptr;
@@ -155,6 +161,27 @@ AST *Parser::call_expression() {
     }
   }
   if (!accept(CP)) return nullptr;
+  return ret;
+}
+
+AST *Parser::lambda_declaration(const string &func_name) {
+  if (is_empty()) return nullptr;
+
+  if (!accept(LAMBDA)) return nullptr;
+  string             arg_name = peek_value();
+  LambdaDeclaration *ret = new LambdaDeclaration(func_name);
+  if (accept(IDENT)) {
+    ret->add(arg_name);
+    while (accept(COMMA)) {
+      arg_name = peek_value();
+      if (!accept(IDENT)) return nullptr;
+      ret->add(arg_name);
+    }
+  }
+
+  if (!accept(COLON)) return nullptr;
+  ret->expr = expression();
+  if (!ret->expr) return nullptr;
   return ret;
 }
 

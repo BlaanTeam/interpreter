@@ -13,6 +13,8 @@ static void label(AST *node, int &id) {
     cout << "VD";
   else if (dynamic_cast<CallExpression *>(node))
     cout << "CE";
+  else if (dynamic_cast<LambdaDeclaration *>(node))
+    cout << "LD[" << ((LambdaDeclaration *)node)->name << "]";
   else if (dynamic_cast<LiteralType *>(node))
     cout << ((LiteralType *)node)->value;
   else if (dynamic_cast<Identifier *>(node))
@@ -55,6 +57,10 @@ static int dfs(AST *node, int &id) {
         l = dfs(arg, id);
         edge(my_id, l);
       }
+    } else if (dynamic_cast<LambdaDeclaration *>(node)) {
+      LambdaDeclaration *lambdaDeclaration = (LambdaDeclaration *)node;
+      l = dfs(lambdaDeclaration->expr, id);
+      edge(my_id, l);
     }
   }
 
@@ -98,5 +104,6 @@ void init_token_names(map<int, string> &token_names) {
   token_names[EQ] = "=";
   token_names[POW] = "^";
   token_names[COMMA] = ",";
+  token_names[COLON] = ":";
   token_names[NONE] = "#";
 }

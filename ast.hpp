@@ -23,6 +23,7 @@ class Type {
   short  type;
   double value;
   Type();
+  Type(const Type &);
   Type(const short &, const double &);
   short operator&(const short) const;
 
@@ -101,6 +102,16 @@ class CallExpression : public AST {
   vector<AST *> args;
   CallExpression(const string &);
   void add(AST *);
+  Type eval();
+};
+
+class LambdaDeclaration : public AST {
+ public:
+  string         name;
+  vector<string> params;
+  AST           *expr;
+  LambdaDeclaration(const string &);
+  void add(const string &);
   Type eval();
 };
 
