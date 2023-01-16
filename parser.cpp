@@ -152,12 +152,20 @@ AST *Parser::call_expression() {
   if (!accept(OP)) return nullptr;
 
   string arg_name = peek_value();
-  if (accept(IDENT)) {
-    ret->add(new Identifier(arg_name));
+  int    type = peek_type();
+  if (accept(IDENT | NUM)) {
+    if (type & IDENT)
+      ret->add(new Identifier(arg_name));
+    else
+      ret->add(new LiteralType(stod(arg_name)));
     while (accept(COMMA)) {
       arg_name = peek_value();
-      if (!accept(IDENT)) return nullptr;
-      ret->add(new Identifier(arg_name));
+      type = peek_type();
+      if (!accept(IDENT | NUM)) return nullptr;
+      if (type & IDENT)
+        ret->add(new Identifier(arg_name));
+      else
+        ret->add(new LiteralType(stod(arg_name)));
     }
   }
   if (!accept(CP)) return nullptr;
